@@ -1,0 +1,41 @@
+TIERONEFORMULA
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_0_Max__c} && {!NumberToOptimize1} <= {!PricingCalcRecords.Tier_1_Max__c}, 
+{!NumberToOptimize1} - {!PricingCalcRecords.Tier_0_Max__c}, 
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_1_Max__c}, {!PricingCalcRecords.Tier_1_Max__c} - {!PricingCalcRecords.Tier_0_Max__c},0))
+
+TIERONEPRICE
+({!Tier0Formula}*{!EquipTypeBasePrice}*{!Tier1Discount}*0.01)
+
+
+Change to
+({!Tier0Formula}*{!EquipTypeBasePrice}*{!Tier1Discount}*0.01)
+
+{!PricingCalcRecords.Tier_1_Max__c}
+
+
+IF({!NumberToOptimize1} < {!PricingCalcRecords.Tier_0_Max__c},{!NumberToOptimize1},{!NumberToOptimize1})
+
+TierTWO Formula
+
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_1_Max__c}&& {!NumberToOptimize1} <= {!PricingCalcRecords.Tier_2_Max__c}, 
+{!NumberToOptimize1} - {!PricingCalcRecords.Tier_1_Max__c}, 
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_2_Max__c}, {!PricingCalcRecords.Tier_2_Max__c}- {!PricingCalcRecords.Tier_1_Max__c},0))
+
+TIer2Cost
+({!Tier2Formula}*{!EquipTypeBasePrice}*{!Tier2Discount}*0.01)
+
+Tier3Formula
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_2_Max__c}&& {!NumberToOptimize1} <= {!PricingCalcRecords.Tier_3_Max__c}, {!NumberToOptimize1} - 
+{!PricingCalcRecords.Tier_2_Max__c}, 
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_3_Max__c}, {!PricingCalcRecords.Tier_3_Max__c}- {!PricingCalcRecords.Tier_2_Max__c},0))
+
+Tier3Price
+({!Tier3Formula}*{!EquipTypeBasePrice}*{!Tier3Discount}*0.01)
+
+Tier4Formula
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_3_Max__c}&& {!NumberToOptimize1} <= {!PricingCalcRecords.Tier_4_Max__c}, {!NumberToOptimize1} - 
+{!PricingCalcRecords.Tier_3_Max__c}, 
+IF({!NumberToOptimize1} > {!PricingCalcRecords.Tier_4_Max__c}, {!PricingCalcRecords.Tier_4_Max__c}- {!PricingCalcRecords.Tier_3_Max__c},0))
+
+Tier4Formula
+({!Tier4Formula}*{!EquipTypeBasePrice}*{!Tier4Discount}*0.01)
