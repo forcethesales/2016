@@ -1,0 +1,154 @@
+<apex:page standardController="Quote">
+           <h2>
+                Pricing Request</h2>
+            <hr style="border: solid thin #0099CC" />
+            <br />
+           
+            <table cellpadding="5" style="border-collapse: collapse" width="100%">
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Opportunity</i>
+                    </td>
+                    <td width="80%">
+                    <b>{!Quote.Opportunity.Name}</b>
+                    <br />
+                       <apex:variable var="url" value="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}"/>
+<apex:outputLink value="{!url}/{!ID}"><b>{!Quote.Opportunity.Opportunity_Number__c}</b></apex:outputLink>  
+                        </td>
+                </tr>
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Internal Request#</i>
+                    </td>
+                    <td width="80%">
+                       <apex:variable var="url" value="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}"/>
+<apex:outputLink value="{!url}/{!Quote.Sales_Ops_Request__r.ID}"><b>{!Quote.Sales_Ops_Request__r.Name}</b></apex:outputLink> 
+                        </td>
+                </tr>
+             <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Site Location</i>
+                    </td>
+                    <td width="80%">
+                         {!Quote.Account.ShippingCity}, {!Quote.Account.ShippingState} {!Quote.Account.ShippingCountry}
+                        </td>
+                </tr>
+                 <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Partner or Customer</i>
+                    </td>
+                    <td width="80%">
+                         {!IF(Quote.Opportunity.LeadSource="Partner", "Partner: " & Quote.Opportunity.Lead_Source_Detail__c,
+                         IF(Quote.Opportunity.JCI_Partner_Opportunity__c=true,"Partner: JCI",
+                         IF(Quote.Opportunity.LeadSource<>"Partner","Customer: " & Quote.Opportunity.Account.Name,
+                         "Direct")))}
+                        </td>
+                </tr>
+           <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>LOOP, AIR, HEAT, and/or ESSENTIALS</i>
+                    </td>
+                    <td width="80%">
+                    {!Quote.Opportunity.Product_Service__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>OptiCx Terms</i>
+                    </td>
+                    <td width="80%">
+                        {!Quote.OptiCx_Commit_Term_Years__c} {!Quote.OptiCx_Payment_Terms__c}
+                    </td>
+                </tr>
+                <tr>
+                
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Project Type</i>
+                    </td>
+                    <td width="80%">
+                    <apex:outputText escape="false" value="{!Quote.Opportunity.Project_Type__c}" />                    </td>
+                </tr> 
+                 <tr>
+                
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Is this post-ESA or post-EDO?</i>
+                    </td>
+                    <td width="80%">
+                    <apex:outputText escape="false" value="{!Quote.Opportunity.ESA_Complete__c}" />                     </td>
+                </tr> 
+                  <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>If J and J, est. non-OE costs?</i>
+                    </td>
+                    <td width="80%">
+                          {!Quote.J_J_Non_OE_Project_Costs__c}
+                    </td></tr>  
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Other Comments?</i>
+                    </td>
+                    <td width="80%">
+                          {!Quote.Sales_Ops_Request__r.Notes__c}
+                    </td> 
+                    </tr> 
+                    <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Tax Status </i>
+                    </td>
+                    <td width="80%">
+                        {!Quote.Account.Tax_Exempt_Status__c} 
+                    </td>
+                    </tr>
+                      <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Tax Rates</i>
+                    </td>
+                    <td width="80%">
+                     GandS Tax Rate:{!Quote.Account.GandS_Tax_Rate__c} Software Tax:{!Quote.Account.SW_Tax_Rate__c}
+                    </td>
+                    </tr>
+                        </table>
+                          <table cellpadding="5" style="border-collapse: collapse" width="100%">
+                <tr>
+                    <td style="background-color: #0099CC; color: #FFFFFF">
+                        <b>Products and Pricing included in proposal</b>
+                    </td>
+                    <td style="background-color: #0099CC; color: #FFFFFF">
+                        <b>Unit Price</b>
+                    </td>
+                </tr>
+                <apex:repeat value="{!Quote.QuoteLineItems}" var="lineItem">
+                        <tr>
+                            <td>
+                                {!lineItem.Product2.Name}
+                            </td>
+                            <td>
+                                {!lineItem.UnitPrice}
+                            </td>                                                            
+                        </tr></apex:repeat>                                    
+            </table>
+</apex:page>
