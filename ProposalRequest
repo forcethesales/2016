@@ -1,0 +1,179 @@
+<messaging:emailTemplate subject="Pricing Request Submitted for {!relatedTo.Name}" recipientType="User" relatedToType="Quote">
+
+   <messaging:htmlEmailBody >
+        <body style="font-family: 'Trebuchet MS'">
+         
+            <h2>
+                New Pricing Request</h2>
+           To approve this request, reply to this email and start with "Approve".  To reject this request, reply and start your email with "Reject". On the next line of your email, type any notes or response you have to the requester.       
+            <hr style="border: solid thin #0099CC" />
+            <br />
+            <table cellpadding="5" style="border-collapse: collapse" width="100%">
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Opportunity</i>
+                    </td>
+                    <td width="80%">
+                       <apex:variable var="url" value="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}"/>
+<apex:outputLink value="{!url}/{!relatedTo.Opportunity.ID}"><b>{!relatedTo.Opportunity.Name}</b></apex:outputLink>  
+                        </td>
+                </tr>
+                 <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Quote #</i>
+                    </td>
+                    <td width="80%"> <apex:repeat value="{!relatedTo.QuoteNumber}" var="SOR">
+                       <apex:variable var="url" value="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}"/>
+<apex:outputLink value="{!url}/{!relatedTo.ID}"><b>{!relatedTo.Name}</b></apex:outputLink> </apex:repeat>
+                        </td>
+                </tr><tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Internal Request#</i>
+                    </td>
+                    <td width="80%"> <apex:repeat value="{!relatedTo.Internal_Request__r}" var="SOR">
+                       <apex:variable var="url" value="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}"/>
+<apex:outputLink value="{!url}/{!SOR.ID}"><b>{!SOR.Name}</b></apex:outputLink> </apex:repeat>
+                        </td>
+                </tr>
+             <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Site Location</i>
+                    </td>
+                    <td width="80%">
+                         {!relatedTo.Account.ShippingCity}, {!relatedTo.Account.ShippingState} {!relatedTo.Account.ShippingCountry}
+                        </td>
+                </tr>
+                 <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Partner or Customer</i>
+                    </td>
+                    <td width="80%">
+                         {!IF(relatedTo.Opportunity.LeadSource="Partner", "Partner: " & RelatedTo.Opportunity.Lead_Source_Detail__c,
+                         IF(relatedTo.Opportunity.JCI_Partner_Opportunity__c=true,"Partner: JCI",
+                         IF(NOT(ISBLANK(relatedTo.Opportunity.Partner__c)),relatedTo.Opportunity.Partner__c,
+                         IF(relatedTo.Opportunity.LeadSource<>"Partner","Customer: " & relatedTo.Opportunity.Account.Name,
+                         "Direct"))))}
+                        </td>
+                </tr>
+                    <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>LOOP, AIR, HEAT, and/or ESSENTIALS</i>
+                    </td>
+                    <td width="80%">
+                    {!relatedTo.Opportunity.Product_Service__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>OptiCx Terms</i>
+                    </td>
+                    <td width="80%">
+                        {!relatedTo.OptiCx_Commit_Term_Years__c} {!relatedTo.OptiCx_Payment_Terms__c}
+                    </td>
+                </tr>
+                <tr>
+                
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Project Type</i>
+                    </td>
+                    <td width="80%">
+                    <apex:outputText escape="false" value="{!relatedTo.Opportunity.Project_Type__c}" />                    </td>
+                </tr> 
+                 <tr>
+                
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Is this post-ESA or post-EDO?</i>
+                    </td>
+                    <td width="80%">
+                    <apex:outputText escape="false" value="{!relatedTo.Opportunity.ESA_Complete__c}" />                     </td>
+                </tr> 
+                  <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>If J and J, est. non-OE costs?</i>
+                    </td>
+                    <td width="80%">
+                          {!relatedTo.J_J_Non_OE_Project_Costs__c}
+                    </td></tr>  
+                <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Other Comments?</i>
+                    </td>
+                    <td width="80%">
+                          <apex:repeat value="{!relatedTo.Internal_Request__r}" var="SOR">{!SOR.Request_Description__c}</apex:repeat>
+                    </td> 
+                    </tr> 
+                    <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Tax Status </i>
+                    </td>
+                    <td width="80%">
+                        {!relatedTo.Account.Tax_Exempt_Status__c} 
+                    </td>
+                    </tr>
+                      <tr>
+                    <td align="right" 
+                        style="border-right-style: solid; border-right-width: thick; border-right-color: #0099CC;" 
+                        width="20%">
+                        <i>Tax Rates</i>
+                    </td>
+                    <td width="80%">
+                     GandS Tax Rate:{!relatedTo.Account.GandS_Tax_Rate__c} Software Tax:{!relatedTo.Account.SW_Tax_Rate__c}
+                    </td>
+                    </tr>
+                        </table>
+                          <table cellpadding="5" style="border-collapse: collapse" width="100%">
+                <tr>
+                    <td style="background-color: #0099CC; color: #FFFFFF">
+                        <b>Products and Pricing included in proposal</b>
+                    </td>
+                    <td style="background-color: #0099CC; color: #FFFFFF">
+                        <b>Quantity</b>
+                        </td>
+                        <td style="background-color: #0099CC; color: #FFFFFF">
+                        <b>Unit Price</b>
+                    </td>
+                </tr>
+                <apex:repeat value="{!relatedTo.QuoteLineItems}" var="lineItem">
+                        <tr>
+                            <td>
+                                {!lineItem.Product2.Name}
+                            </td>
+                            <td>
+                                {!lineItem.Quantity}
+                            </td>
+                            <td>
+                                {!lineItem.UnitPrice}
+                                                       </td>                                                            
+                        </tr></apex:repeat>
+            </table>
+        
+        <apex:outputLink value="https://na32.salesforce.com/p/process/ProcessInstanceWorkitemWizardStageManager?id={!relatedTo.Id}" id="theLink">
+         <apex:image url="https://c.na32.content.force.com/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=06838000001SlSE&operationContext=CHATTER&contentId=05T38000005Kz5R">
+          </apex:image>
+            </apex:outputLink></body>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>
