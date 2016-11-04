@@ -1,0 +1,61 @@
+<apex:page StandardController="Engineering__c" extensions="MultiAddEng" id="thePage">
+<apex:form >
+<apex:pageblock id="pb" >
+    <apex:pageBlockButtons >
+        <apex:commandbutton value="Add" action="{!Add}" rerender="pb1"/>
+        <apex:commandbutton value="Save" action="{!Save}"/>
+    </apex:pageBlockButtons>
+    
+        
+        <apex:pageblock id="pb1">
+            
+        <apex:repeat value="{!lstInner}" var="e1" id="therepeat">
+                <apex:panelGrid columns="5">
+                
+                <apex:panelGrid headerClass="Name">
+                    <apex:facet name="header">Del</apex:facet>
+                    <apex:commandButton value="X" action="{!Del}" rerender="pb1">
+                        <apex:param name="rowToBeDeleted" value="{!e1.recCount}" assignTo="{!selectedRowIndex}"></apex:param>
+                    </apex:commandButton>
+                </apex:panelGrid>   
+               
+                <apex:panelGrid >
+                    <apex:facet name="header">Quote</apex:facet>
+                    <apex:inputfield value="{!e1.eng.Quote__c}"/>
+                    <apex:variable var="quote" value="{!Engineering__c.Quote__c}" />
+
+                </apex:panelGrid>
+                
+                
+                <apex:panelGrid >
+                    <apex:facet name="header">Type of Engineer</apex:facet>
+                    <apex:inputfield value="{!e1.eng.Type_of_Engineer__c}"/>
+                                    </apex:panelGrid>
+                                    
+                                    <apex:panelGrid >
+                    <apex:facet name="header">Engineers</apex:facet>
+                    <apex:inputfield value="{!e1.eng.Engineers__c}"/>
+                                    </apex:panelGrid>
+                                    
+                                    <apex:panelGrid >
+                    <apex:facet name="header">Working Hours</apex:facet>
+                    <apex:inputfield value="{!e1.eng.Working_Hours__c}"/>
+                </apex:panelGrid>
+                
+                <apex:panelGrid >
+                    <apex:facet name="header">Traveler 1 Days on Site</apex:facet>
+                    <apex:inputfield value="{!e1.eng.Traveler1NumberofDays__c}"/>
+                </apex:panelGrid>
+                                    
+                                    
+                                      <apex:panelGrid >
+                    <apex:facet name="header">Traveler 2 Days on Site</apex:facet>
+                    <apex:inputfield value="{!e1.eng.Traveler2NumberofDays__c}"/>
+                </apex:panelGrid>
+            </apex:panelgrid>
+        </apex:repeat>
+    </apex:pageBlock>
+        
+</apex:pageblock>
+</apex:form>
+</apex:page>
