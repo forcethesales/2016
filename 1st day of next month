@@ -1,0 +1,4 @@
+DATE( IF(MONTH(Start_Date__c) = 12, 
+YEAR(Start_Date__c)+1, 
+YEAR(Start_Date__c)), 
+IF(MONTH(Start_Date__c)=12, 1, MONTH(Start_Date__c)+1), 1)
